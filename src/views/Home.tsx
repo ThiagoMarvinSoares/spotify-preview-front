@@ -10,23 +10,26 @@ export default function Home(){
     //Setting data state
     const [data, setData] = useState(null)
 
-        Use effect to get the data async
-        useEffect(() => {
-            axios.get('http://127.0.0.1:5000/accessToken')
-            .then(response => {
-                console.log('data')
-                setData(response.data)
-            })
-            .catch(error => {
-                console.log('error:', data)
-            })
-        })
+        //Use effect to get the data async
+        // useEffect(() => {
+        //     axios.get('http://127.0.0.1:5000/accessToken')
+        //     .then(response => {
+        //         console.log('data')
+        //         setData(response.data)
+        //     })
+        //     .catch(error => {
+        //         console.log('error:', data)
+        //     })
+        // })
     return (
-        <div>
-            <Playlist></Playlist>
-            <Player></Player>
-            <ProgressBar></ProgressBar>
-            <p>{data}</p>
+        <div className='flex items-center justify-center h-screen'>
+            <div className='flex justify-center bg-blue-500'>
+                <div className='border border-gray-400 p-2 m-2'><Playlist/></div>
+                <div>
+                    <div className='border border-gray-400 p-2 m-2'><Player/></div>
+                    <div className='border border-gray-400 p-2 m-2'><ProgressBar/></div>    
+                </div> 
+            </div>
         </div>
     );
 }
