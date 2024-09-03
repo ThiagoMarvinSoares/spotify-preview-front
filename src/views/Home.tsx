@@ -8,19 +8,18 @@ import axios from 'axios';
 
 export default function Home(){
     //Setting data state
-    const [data, setData] = useState(null)
+    let [data, setData] = useState(null)
 
         //Use effect to get the data async
-        // useEffect(() => {
-        //     axios.get('http://127.0.0.1:5000/accessToken')
-        //     .then(response => {
-        //         console.log('data')
-        //         setData(response.data)
-        //     })
-        //     .catch(error => {
-        //         console.log('error:', data)
-        //     })
-        // })
+        useEffect(() => {
+            axios.get('http://127.0.0.1:5000/accessToken')
+            .then((response) => {
+                setData(response.data)
+            })
+            .catch(() => {
+                console.log('erro:', data)
+            })
+        })
     return (
         <div className='flex items-center justify-center h-screen'>
             <div className='flex justify-center bg-blue-500'>
