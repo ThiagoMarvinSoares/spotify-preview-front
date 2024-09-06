@@ -8,17 +8,25 @@ import ProgressBar from '../components/ProgressBar/ProgressBar';
 import Playlist from '../components/Playlist/Playlist';
 import axios from 'axios';
 
+interface interfaceTrack{
+    track: { name: string };
+}
+
 interface response{
     name: string;
     description: string;
     tracks: string;
+    images: {url:string}[];
+    items: Array <interfaceTrack>;
+    preview_url: string;
 }
 
 export default function Home(){
     //Setting data state
     const [data, setData] = useState <string> ('');
     const [playlist, setPlaylist] = useState < response | null > (null);
-    const albumImage = playlist?.images[0].url;
+    // const albumImage = playlist?.images[0].url;
+    // const preview = playlist?.
 
         //Use effect to get the data async
         useEffect(() => {
@@ -40,7 +48,7 @@ export default function Home(){
                 "Authorization": `Bearer ${data}`
             }
 
-            axios.get('https://api.spotify.com/v1/playlists/37i9dQZF1DZ06evO2k3tf2',{headers: headers})
+            axios.get('https://api.spotify.com/v1/playlists/37i9dQZF1DZ06evO2k3tf2/tracks',{headers: headers})
             .then((response) => {
                 setPlaylist(response.data)
             })
@@ -48,16 +56,16 @@ export default function Home(){
                 console.log('error', data)
             })
         }
-
+        console.log(playlist?.items[0].track.name)
     return (
         <div className='flex items-center justify-center h-screen'>
             <div className='flex justify-center bg-blue-500'>
-                { playlist === null ? (null) : (
+                {/* playlist === null ? (null) : (
                     <div>
                         <p>{playlist.name}</p>
                         <img src={albumImage} alt="Image from album" className='w-48'/> 
                     </div>
-                )}
+                )*/}
                 <div className='border border-gray-400 p-2 m-2'>
                     <Playlist/>
                 </div>
