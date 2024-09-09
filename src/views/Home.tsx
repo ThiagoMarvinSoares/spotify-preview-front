@@ -73,18 +73,18 @@ export default function Home(){
         
     return (
         <div className='flex items-center justify-center h-screen'>
-            <div className='flex justify-center bg-blue-500'>
+            <div className='flex justify-center bg-blue-500 w-[80vw] h-[80vh]'>
                 {playlist === null ? (null) : (
-                    <div className='flex-col'>
+                    <div className='flex-col w-[20vw]'>
                         <p>{albumInfo.name}</p>
                         <img src={albumInfo.image} alt="Image from album" className='w-48'/> 
                     </div>
                 )}
-                <div className='border border-gray-400 p-2 m-2'>
+                <div className='border border-gray-400 p-2 m-2 w-[50vw]'>
                     <Playlist/>
                     <p>{playlistItems.name}</p>
                 </div>
-                <div>
+                <div className='w-[30vw]'>
                     <div className='border border-gray-400 p-2 m-2'><Player/>
                     </div>
 
