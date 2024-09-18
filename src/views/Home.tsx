@@ -19,15 +19,15 @@ export default function Home(){
             .catch(() => {
                 console.log('erro:', data)
             })
-        })
+        }, [])
     return (
-        <div className='flex items-center justify-center h-screen'>
-            <div className='flex justify-center bg-blue-500'>
-                <div className='border border-gray-400 p-2 m-2'><Playlist/></div>
+        <div className='bg-white dark:bg-black flex items-center justify-center h-screen w-screen'>
+            <div className='flex justify-center bg-blue-500 w-2/6'>
+                <div className='border border-gray-400 p-2 m-2 w-full'><Playlist/></div>
                 <div>
                     <div className='border border-gray-400 p-2 m-2'><Player/></div>
                     <div className='border border-gray-400 p-2 m-2'><ProgressBar/></div>    
-                </div> 
+                </div>
             </div>
         </div>
     );
