@@ -30,17 +30,19 @@ interface tracksResponse{
 export default function Home(){
     //Setting data state
     const [data, setData] = useState <string> ('');
-    const [playlist, setPlaylist] = useState < albumResponse | null > (null);
-    const [tracksList, setTracksList] = useState < tracksResponse | null > (null);
+    const [playlist, setPlaylist] = useState <albumResponse | null> (null);
+    const [tracksList, setTracksList] = useState <tracksResponse | null> (null);
+
+    const [currentTrack, setCurrentTrack] = useState <interfaceTrack | null> (null);
+
+    const handlePlayTrack = (track: interfaceTrack) => {
+        setCurrentTrack(track);
+    };
 
     //Album object
     let albumInfo = {
         name: playlist?.name,
         image: playlist?.images[0].url
-    }
-
-    let playlistItems = {
-        name: tracksList?.items[0].track.name
     }
 
         //Use effect to get the data async
@@ -88,11 +90,11 @@ export default function Home(){
                     </div>
                 )}
                 <div className='border border-gray-400 p-2 m-2 w-[50vw]'>
-                    {tracksList && <Playlist tracks={tracksList.items} />}
-                    {/* <p>{playlistItems.name}</p> */}
+                    {tracksList && <Playlist tracks={tracksList.items} onPlay={handlePlayTrack} />}
                 </div>
                 <div className='w-[30vw]'>
-                    <div className='border border-gray-400 p-2 m-2'><Player/>
+                    <div className='border border-gray-400 p-2 m-2'>
+                        <Player currentTrack={currentTrack} />
                     </div>
 
                     <div className='border border-gray-400 p-2 m-2'><ProgressBar/></div>    
