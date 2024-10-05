@@ -34,10 +34,10 @@ export default function Home(){
     const [playlist, setPlaylist] = useState <albumResponse | null> (null);
     const [tracksList, setTracksList] = useState <tracksResponse | null> (null);
 
-    const [currentTrack, setCurrentTrack] = useState <interfaceTrack | null> (null);
+    const [currentTrackIndex, setCurrentTrackIndex] = useState(-1);
 
-    const handlePlayTrack = (track: interfaceTrack) => {
-        setCurrentTrack(track);
+    const handlePlayTrack = (track: interfaceTrack, index: number) => {
+        setCurrentTrackIndex(index);
     };
 
     //Album object
@@ -95,10 +95,13 @@ export default function Home(){
                 </div>
                 <div className='w-[30vw]'>
                     <div className='border border-gray-400 p-2 m-2'>
-                        <Player currentTrack={currentTrack} />
+                        <Player 
+                            currentTrackIndex={currentTrackIndex}
+                            tracks={tracksList?.items}
+                            onTrackChange={setCurrentTrackIndex} 
+                        />                   
                     </div>
-
-                    <div className='border border-gray-400 p-2 m-2'><ProgressBar/></div>    
+                    {/* <div className='border border-gray-400 p-2 m-2'><ProgressBar/></div>     */}
                 </div>
             </div>
         </div>

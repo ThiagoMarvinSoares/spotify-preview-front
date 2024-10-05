@@ -13,7 +13,7 @@ interface interfaceTrack {
 
 interface PlaylistProps {
     tracks: Array<interfaceTrack>;
-    onPlay: (track: interfaceTrack) => void;
+    onPlay: (track: interfaceTrack, index: number) => void;
 }
 
 export default function Playlist({ tracks, onPlay }: PlaylistProps){
@@ -28,7 +28,7 @@ export default function Playlist({ tracks, onPlay }: PlaylistProps){
                             className="w-12 h-12 rounded-sm p-0.5" 
                         />
                         <p className="flex-1">{track.track.name}</p>
-                        <button className="absolute right-2" onClick={() => onPlay(track)}>
+                        <button className="absolute right-2" onClick={() => onPlay(track, index)}>
                             <img 
                                 src="/images/play-button-white.png"
                                 alt="Play button"
