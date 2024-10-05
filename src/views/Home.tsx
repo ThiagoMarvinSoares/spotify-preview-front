@@ -9,9 +9,10 @@ import axios from 'axios';
 interface interfaceTrack {
     track: { 
         name: string;
+        preview_url: string;
         album: {
             images: { url: string }[];
-        }
+        }        
     };
 }
 

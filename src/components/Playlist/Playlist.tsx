@@ -4,6 +4,7 @@ import Home from "@/src/views/Home"
 interface interfaceTrack {
     track: { 
         name: string;
+        preview_url: string;
         album: {
             images: { url: string }[];
         }
