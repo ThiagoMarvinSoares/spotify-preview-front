@@ -20,13 +20,28 @@ interface PlayerProps {
 export default function Player({ currentTrackIndex, tracks, onTrackChange }: PlayerProps) {
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [isPlaying, setIsPlaying] = useState(false);
+    const [progress, setProgress] = useState(0);
     const currentTrack = tracks ? tracks[currentTrackIndex] : null;
 
     useEffect(() => {
         const audio = audioRef.current;
 
         if (audio) {
-            const handleEnded = () => setIsPlaying(false);
+            const handleTimeUpdate = () => {
+                if (audio.duration){
+                    const percent = (audio.currentTime / audio.duration) * 100;
+                    setProgress(percent);
+                }
+            };
+            
+            const handleEnded = () => {
+                audio.currentTime = 0;
+                audio.play().catch(err => {
+                    console.error("error replaying audio", err);
+                });
+            }
+            
+            audio.addEventListener('timeupdate', handleTimeUpdate)
             audio.addEventListener('ended', handleEnded);
 
             if (currentTrack && currentTrack.track.preview_url) {
@@ -106,7 +121,12 @@ export default function Player({ currentTrackIndex, tracks, onTrackChange }: Pla
 
                 <audio ref={audioRef}/>   
 
-                <img className="h-8 cursor-pointer" src="images/next.svg" alt="Next button" onClick={handleNextTrack}/>
+                <img className="h-8 cursor-pointer" src="images/next.svg" alt="Next button" onClick={handleNextTrack}/>                
+            </div>
+            <div className="w-full">
+                <div className="relative w-full h-4 bg-gray-200 rounded-lg">
+                    <div className="absolute top-0 left-0 h-full bg-orange-500 rounded-l-lg" style={{ width: `${progress}%` }}></div>
+                </div>
             </div>
         </div>
     );

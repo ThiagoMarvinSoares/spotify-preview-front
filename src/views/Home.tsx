@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import Player from '../components/Player/Player'
-import ProgressBar from '../components/ProgressBar/ProgressBar';
 import Playlist from '../components/Playlist/Playlist';
 import axios from 'axios';
 
@@ -99,7 +98,7 @@ export default function Home(){
                             currentTrackIndex={currentTrackIndex}
                             tracks={tracksList?.items}
                             onTrackChange={setCurrentTrackIndex} 
-                        />                   
+                        />                        
                     </div>
                     {/* <div className='border border-gray-400 p-2 m-2'><ProgressBar/></div>     */}
                 </div>
