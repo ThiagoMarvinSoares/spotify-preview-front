@@ -6,8 +6,13 @@ import ProgressBar from '../components/ProgressBar/ProgressBar';
 import Playlist from '../components/Playlist/Playlist';
 import axios from 'axios';
 
-interface interfaceTrack{
-    track: { name: string };
+interface interfaceTrack {
+    track: { 
+        name: string;
+        album: {
+            images: { url: string }[];
+        }
+    };
 }
 
 //Setting types for playlist items
@@ -35,7 +40,7 @@ export default function Home(){
     }
 
     let playlistItems = {
-        name: tracksList?.items[0].track.name,
+        name: tracksList?.items[0].track.name
     }
 
         //Use effect to get the data async
@@ -65,6 +70,8 @@ export default function Home(){
             .then(axios.spread(function(albumResponse, tracksResponse){
                 setPlaylist(albumResponse.data)
                 setTracksList(tracksResponse.data)
+
+                console.log('Tracks Reponse:', tracksResponse.data.items);
             }))
             .catch((error) => {
                 console.log(error)
@@ -75,21 +82,21 @@ export default function Home(){
         <div className='flex items-center bg-slate-800 text-white justify-center h-screen'>
             <div className='flex justify-center w-[80vw] h-[80vh]'>
                 {playlist === null ? (null) : (
-                    <div className='flex-col w-[20vw]'>
-                        <p>{albumInfo.name}</p>
-                        <img src={albumInfo.image} alt="Image from album" className='w-48'/> 
+                    <div className='flex items-center flex-col w-[20vw] space-y-5'>
+                        <p className='text-xl'>{albumInfo.name}</p>
+                        <img src={albumInfo.image} alt="Image from album" className='w-48 rounded-full'/> 
                     </div>
                 )}
                 <div className='border border-gray-400 p-2 m-2 w-[50vw]'>
-                    <Playlist/>
-                    <p>{playlistItems.name}</p>
+                    {tracksList && <Playlist tracks={tracksList.items} />}
+                    {/* <p>{playlistItems.name}</p> */}
                 </div>
                 <div className='w-[30vw]'>
                     <div className='border border-gray-400 p-2 m-2'><Player/>
                     </div>
 
                     <div className='border border-gray-400 p-2 m-2'><ProgressBar/></div>    
-                </div> 
+                </div>
             </div>
         </div>
     );
