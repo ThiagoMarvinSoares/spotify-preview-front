@@ -4,6 +4,7 @@ import Home from "@/src/views/Home"
 interface interfaceTrack {
     track: { 
         name: string;
+        preview_url: string;
         album: {
             images: { url: string }[];
         }
@@ -12,9 +13,10 @@ interface interfaceTrack {
 
 interface PlaylistProps {
     tracks: Array<interfaceTrack>;
+    onPlay: (track: interfaceTrack, index: number) => void;
 }
 
-export default function Playlist({ tracks }: PlaylistProps){
+export default function Playlist({ tracks, onPlay }: PlaylistProps){
     return (
         <div className="max-h-full overflow-y-auto p-2">
             <ul className="space-y-2">
@@ -26,11 +28,13 @@ export default function Playlist({ tracks }: PlaylistProps){
                             className="w-12 h-12 rounded-sm p-0.5" 
                         />
                         <p className="flex-1">{track.track.name}</p>
-                        <img 
-                            src="/images/play-button-white.png"
-                            alt="Play button"
-                            className="w-8 h-8 cursor-pointer absolute right-2"
-                        />                   
+                        <button className="absolute right-2" onClick={() => onPlay(track, index)}>
+                            <img 
+                                src="/images/play-button-white.png"
+                                alt="Play button"
+                                className="w-8 h-8 cursor-pointer"
+                            />     
+                        </button>                  
                     </li>
                 ))}
             </ul>

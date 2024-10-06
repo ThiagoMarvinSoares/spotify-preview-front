@@ -2,16 +2,16 @@
 
 import { useEffect, useState } from 'react';
 import Player from '../components/Player/Player'
-import ProgressBar from '../components/ProgressBar/ProgressBar';
 import Playlist from '../components/Playlist/Playlist';
 import axios from 'axios';
 
 interface interfaceTrack {
     track: { 
         name: string;
+        preview_url: string;
         album: {
             images: { url: string }[];
-        }
+        }        
     };
 }
 
@@ -30,17 +30,19 @@ interface tracksResponse{
 export default function Home(){
     //Setting data state
     const [data, setData] = useState <string> ('');
-    const [playlist, setPlaylist] = useState < albumResponse | null > (null);
-    const [tracksList, setTracksList] = useState < tracksResponse | null > (null);
+    const [playlist, setPlaylist] = useState <albumResponse | null> (null);
+    const [tracksList, setTracksList] = useState <tracksResponse | null> (null);
+
+    const [currentTrackIndex, setCurrentTrackIndex] = useState(-1);
+
+    const handlePlayTrack = (track: interfaceTrack, index: number) => {
+        setCurrentTrackIndex(index);
+    };
 
     //Album object
     let albumInfo = {
         name: playlist?.name,
         image: playlist?.images[0].url
-    }
-
-    let playlistItems = {
-        name: tracksList?.items[0].track.name
     }
 
         //Use effect to get the data async
@@ -88,14 +90,17 @@ export default function Home(){
                     </div>
                 )}
                 <div className='border border-gray-400 p-2 m-2 w-[50vw]'>
-                    {tracksList && <Playlist tracks={tracksList.items} />}
-                    {/* <p>{playlistItems.name}</p> */}
+                    {tracksList && <Playlist tracks={tracksList.items} onPlay={handlePlayTrack} />}
                 </div>
                 <div className='w-[30vw]'>
-                    <div className='border border-gray-400 p-2 m-2'><Player/>
+                    <div className='border border-gray-400 p-2 m-2'>
+                        <Player 
+                            currentTrackIndex={currentTrackIndex}
+                            tracks={tracksList?.items}
+                            onTrackChange={setCurrentTrackIndex} 
+                        />                        
                     </div>
-
-                    <div className='border border-gray-400 p-2 m-2'><ProgressBar/></div>    
+                    {/* <div className='border border-gray-400 p-2 m-2'><ProgressBar/></div>     */}
                 </div>
             </div>
         </div>
